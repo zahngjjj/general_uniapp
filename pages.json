@@ -5,6 +5,12 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path": "pages/charts/MonthlySalesChart",
+			"style": {
+				"navigationBarTitleText": "销售完成情况"
+			}
 		}
 	],
 	"globalStyle": {

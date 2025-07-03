@@ -5,6 +5,23 @@
 		:opts="opts"
 		:chartData="chartData"
 	  />
+	  <!-- 添加表格 -->
+	  <view class="table-container">
+		<table class="data-table">
+		  <tr>
+			<th>月份</th>
+			<th>目标</th>
+			<th>实际完成</th>
+			<th>完成比例</th>
+		  </tr>
+		  <tr v-for="(item, index) in tableData" :key="index">
+			<td>{{ item.month }}</td>
+			<td>{{ item.target }}</td>
+			<td>{{ item.actual }}</td>
+			<td>{{ item.ratio }}</td>
+		  </tr>
+		</table>
+	  </view>
 	</view>
   </template>
   
@@ -13,6 +30,7 @@
 	data() {
 	  return {
 		chartData: {},
+		tableData: [], // 添加表格数据数组
 		//您可以通过修改 config-ucharts.js 文件中下标为 ['mix'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
 		opts: {
 		  color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
@@ -99,8 +117,25 @@
 			  ]
 			};
 		  this.chartData = JSON.parse(JSON.stringify(res));
+		  
+		  // 生成表格数据
+		  this.generateTableData(res);
 		}, 500);
 	  },
+	  
+	  // 添加生成表格数据的方法
+	  generateTableData(chartData) {
+		const tableData = [];
+		for (let i = 0; i < chartData.categories.length; i++) {
+		  tableData.push({
+			month: chartData.categories[i].replace('月', ''),
+			target: chartData.series[0].data[i],
+			actual: chartData.series[1].data[i],
+			ratio: chartData.series[2].data[i] + '%'
+		  });
+		}
+		this.tableData = tableData;
+	  }
 	}
   };
   </script>
@@ -109,6 +144,45 @@
 	/* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
 	.charts-box {
 	  width: 100%;
-	  height: 300px;
+	  height: auto;
+	}
+	
+	/* 表格样式 */
+	.table-container {
+	  margin-top: 20px;
+	  padding: 0 10px;
+	  animation: fadeIn 0.8s ease-in-out;
+	}
+	
+	.data-table {
+	  width: 100%;
+	  border-collapse: collapse;
+	  text-align: center;
+	}
+	
+	.data-table th, .data-table td {
+	  border: 1px solid #ddd;
+	  padding: 8px;
+	}
+	
+	.data-table th {
+	  background-color: #f2f2f2;
+	  color: #333;
+	}
+	
+	.data-table tr:nth-child(even) {
+	  background-color: #f9f9f9;
+	}
+	
+	/* 添加渐入动画 */
+	@keyframes fadeIn {
+	  from {
+		opacity: 0;
+		transform: translateY(20px);
+	  }
+	  to {
+		opacity: 1;
+		transform: translateY(0);
+	  }
 	}
   </style>
