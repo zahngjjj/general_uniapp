@@ -4,31 +4,32 @@
     <view class="tabs-header">
       <view 
         class="tab-item" 
-        :class="{ active: activeTab === 'sales' }"
-        @click="switchTab('sales')"
-      >
-        销售完成情况
-      </view>
-      <view 
-        class="tab-item" 
         :class="{ active: activeTab === 'production' }"
         @click="switchTab('production')"
       >
         生产完成情况
       </view>
+      <view 
+        class="tab-item" 
+        :class="{ active: activeTab === 'sales' }"
+        @click="switchTab('sales')"
+      >
+        销售完成情况
+      </view>
     </view>
     
     <!-- 标签页内容 -->
     <view class="tabs-content">
+      <!-- 生产完成情况 -->
+      <view v-if="activeTab === 'production'" class="tab-content">
+        <MonthlyProductionChart />
+      </view>
       <!-- 销售完成情况 -->
       <view v-if="activeTab === 'sales'" class="tab-content">
         <MonthlySalesChart />
       </view>
       
-      <!-- 生产完成情况 -->
-      <view v-if="activeTab === 'production'" class="tab-content">
-        <MonthlyProductionChart />
-      </view>
+
     </view>
   </view>
 </template>
@@ -45,7 +46,7 @@ export default {
   },
   data() {
     return {
-      activeTab: 'sales' // 默认显示销售完成情况
+      activeTab: 'production' // 默认显示销售完成情况
     };
   },
   methods: {
