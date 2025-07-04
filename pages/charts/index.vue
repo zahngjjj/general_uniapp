@@ -1,108 +1,127 @@
 <template>
   <view class="container">
-    <view class="chart-container">
-      <view class="chart-title">销售</view>
-      <!-- 替换为秋云图表组件 -->
-      <qiun-data-charts 
-        type="mix"
-        :opts="opts"
-        :chartData="chartData"
-        canvasId="salesChart"
-      />
+    <!-- 标签页导航 -->
+    <view class="tabs-header">
+      <view 
+        class="tab-item" 
+        :class="{ active: activeTab === 'sales' }"
+        @click="switchTab('sales')"
+      >
+        销售完成情况
+      </view>
+      <view 
+        class="tab-item" 
+        :class="{ active: activeTab === 'production' }"
+        @click="switchTab('production')"
+      >
+        生产完成情况
+      </view>
+    </view>
+    
+    <!-- 标签页内容 -->
+    <view class="tabs-content">
+      <!-- 销售完成情况 -->
+      <view v-if="activeTab === 'sales'" class="tab-content">
+        <MonthlySalesChart />
+      </view>
+      
+      <!-- 生产完成情况 -->
+      <view v-if="activeTab === 'production'" class="tab-content">
+        <MonthlyProductionChart />
+      </view>
     </view>
   </view>
 </template>
 
 <script>
-// 引入秋云图表组件
-import qiunDataCharts from '@qiun/ucharts-mp';
+// 引入组件
+import MonthlySalesChart from '../charts/MonthlySalesChart.vue';
+import MonthlyProductionChart from '../charts/MonthlyProductionChart.vue';
 
 export default {
   components: {
-    qiunDataCharts
+    MonthlySalesChart,
+    MonthlyProductionChart
   },
   data() {
     return {
-      // 图表配置
-      opts: {
-        color: ['#f8b195', '#7a9ee0', '#f3c13a'],
-        padding: [15, 15, 0, 15],
-        legend: {
-          show: true,
-          position: 'bottom',
-          float: 'center'
-        },
-        xAxis: {
-          disableGrid: true
-        },
-        yAxis: {
-          data: [
-            {
-              min: 0,
-              max: 6,
-              splitNumber: 6
-            }
-          ]
-        },
-        extra: {
-          column: {
-            width: 30,
-            barBorderRadius: 0
-          },
-          line: {
-            width: 3,
-            type: 'straight'
-          }
-        }
-      },
-      // 图表数据
-      chartData: {
-        categories: ['1', '2', '3', '4'],
-        series: [
-          {
-            name: '目标',
-            type: 'column',
-            data: [4.2, 2.5, 3.5, 4.3]
-          },
-          {
-            name: '实际',
-            type: 'column',
-            data: [2.1, 2.2, 3.0, 4.9]
-          },
-          {
-            name: '完成比例',
-            type: 'line',
-            data: [2.5, 4.3, 1.8, 2.9],
-            style: 'curve', // 曲线样式
-            pointShape: 'circle' // 点的形状
-          }
-        ]
-      }
+      activeTab: 'sales' // 默认显示销售完成情况
     };
+  },
+  methods: {
+    // 切换标签页
+    switchTab(tabName) {
+      this.activeTab = tabName;
+    }
   }
 }
 </script>
 
 <style>
 .container {
+  padding: 0;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 标签页导航样式 */
+.tabs-header {
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 30rpx;
+  color: #666;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  color: #4285f4;
+  font-weight: bold;
+}
+
+/* 活动标签底部指示器 */
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 6rpx;
+  background-color: #4285f4;
+  border-radius: 3rpx;
+}
+
+/* 标签页内容样式 */
+.tabs-content {
   padding: 20rpx;
 }
-.chart-container {
+
+.tab-content {
   background-color: #fff;
   border-radius: 10rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
-  padding: 20rpx;
-  margin-bottom: 20rpx;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease-in-out;
 }
-.chart-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20rpx;
-}
-/* 设置图表容器高度 */
-.qiun-charts {
-  width: 100%;
-  height: 600rpx;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
