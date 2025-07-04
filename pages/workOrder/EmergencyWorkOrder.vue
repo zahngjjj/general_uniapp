@@ -65,8 +65,9 @@ export default {
     
     // 导航到详情页
     navigateToDetail(item) {
-      // 这里可以添加导航逻辑
-      console.log('查看工单详情:', item.orderNo);
+      uni.navigateTo({
+        url: `/pages/workOrder/OrderDetail?orderNo=${item.orderNo}`
+      });
     }
   }
 };

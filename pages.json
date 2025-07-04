@@ -23,6 +23,12 @@
 			"style": {
 				"navigationBarTitleText": "紧急工单"
 			}
+		},
+		{
+			"path": "pages/workOrder/OrderDetail",
+			"style": {
+			"navigationBarTitleText": "工单详情"
+			}
 		}
 	],
 	"tabBar": {
