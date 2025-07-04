@@ -9,7 +9,7 @@
 		{
 			"path": "pages/charts/MonthlySalesChart",
 			"style": {
-				"navigationBarTitleText": "销售完成情况"
+				"navigationBarTitleText": "生产/销售完成情况"
 			}
 		},
 		{
@@ -58,10 +58,10 @@
 		]
 	},
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+        "navigationBarTextStyle": "black",
 		"navigationBarTitleText": "总经理看板",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#FFF",
+		"backgroundColor": "#f5f5f5"
 	},
 	"uniIdRouter": {}
 }

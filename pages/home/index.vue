@@ -1,188 +1,179 @@
 <template>
-	<view class="charts-box">
-	  <qiun-data-charts 
-		type="mix"
-		:opts="opts"
-		:chartData="chartData"
-	  />
-	  <!-- 添加表格 -->
-	  <view class="table-container">
-		<table class="data-table">
-		  <tr>
-			<th>月份</th>
-			<th>目标</th>
-			<th>实际完成</th>
-			<th>完成比例</th>
-		  </tr>
-		  <tr v-for="(item, index) in tableData" :key="index">
-			<td>{{ item.month }}</td>
-			<td>{{ item.target }}</td>
-			<td>{{ item.actual }}</td>
-			<td>{{ item.ratio }}</td>
-		  </tr>
-		</table>
-	  </view>
-	</view>
-  </template>
+  <view class="container">
+    <!-- 标题栏 -->
+    <view class="header">
+      <text class="header-title">目标完成情况</text>
+    </view>
+    
+    <!-- 数据卡片区域 -->
+    <view class="cards-container">
+      <!-- 第一行卡片：年度相关指标 -->
+      <view class="cards-row">
+        <view class="card">
+          <text class="card-title">年度目标</text>
+          <text class="card-value blue">10,000</text>
+        </view>
+        <view class="card">
+          <text class="card-title">年度完成数量</text>
+          <text class="card-value blue">8,500</text>
+        </view>
+        <view class="card">
+          <text class="card-title">年度完成率</text>
+          <text class="card-value red">85.0%</text>
+        </view>
+      </view>
+      
+      <!-- 第二行卡片：月度相关指标 -->
+      <view class="cards-row">
+        <view class="card">
+          <text class="card-title">月度目标</text>
+          <text class="card-value blue">1,000</text>
+        </view>
+        <view class="card">
+          <text class="card-title">月度完成数量</text>
+          <text class="card-value blue">950</text>
+        </view>
+        <view class="card">
+          <text class="card-title">月度完成率</text>
+          <text class="card-value orange">95.0%</text>
+        </view>
+      </view>
+      
+      <!-- 第三行卡片：质量相关指标 -->
+      <view class="cards-row">
+        <view class="card">
+          <text class="card-title">年度质量目标</text>
+          <text class="card-value blue">98.0%</text>
+        </view>
+        <view class="card">
+          <text class="card-title">实际合格率</text>
+          <text class="card-value blue">97.5%</text>
+        </view>
+        <view class="card empty-card"></view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      // 数据可以根据实际需求从API获取
+    };
+  },
+  onReady() {
+    // 页面加载完成后的处理
+  },
+  methods: {
+    // 方法定义
+  }
+};
+</script>
+
+<style scoped>
+  /* 整体容器样式 */
+  .container {
+    width:100%;
+    height:calc(100dvh - 94px);
+    background-color: #f5f5f5;
+  }
   
-  <script>
-  export default {
-	data() {
-	  return {
-		chartData: {},
-		tableData: [], // 添加表格数据数组
-		//您可以通过修改 config-ucharts.js 文件中下标为 ['mix'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
-		opts: {
-		  color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
-		  padding: [15,15,0,15],
-		  enableScroll: false,
-		  legend: {},
-		  xAxis: {
-			disableGrid: true,
-		  },
-		  yAxis: {
-			disabled: false,
-			disableGrid: false,
-			splitNumber: 5,
-			gridType: "dash",
-			dashLength: 4,
-			gridColor: "#CCCCCC",
-			padding: 10,
-			showTitle: true,
-			data: [
-			  {
-				position: "left",
-				title: "数量(万箱)"
-			  },
-			  {
-				position: "right",
-				min: 0,
-				max: 200,
-				title: "比例%",
-				textAlign: "left"
-			  },
-			]
-		  },
-		  extra: {
-			mix: {
-			  column: {
-				width: 20
-			  }
-			}
-		  }
-		}
-	  };
-	},
-	onReady() {
-	  this.getServerData();
-	},
-	methods: {
-	  getServerData() {
-		//模拟从服务器获取数据时的延时
-		setTimeout(() => {
-		  //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
-		  let res = {
-			  categories: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
-			  series: [
-				// {
-				//   name: "曲面",
-				//   type: "area",
-				//   style: "curve",
-				//   data: [70,50,85,130,64,88,70,50,85,130,64,88],
-				//   disableLegend: true
-				// },
-				{
-				  name: "目标",
-				  index: 1,
-				  type: "column",
-				  labelShow: false,
-				  data: [40,30,55,110,24,58,70,50,85,130,64,88]
-				},
-				{
-				  name: "实际",
-				  index: 1,
-				  type: "column",
-				  labelShow: false,
-				  data: [50,20,75,60,34,38,50,20,75,60,34,38]
-				},
-				{
-				  name: "完成比例",
-				  type: "line",
-				  style: "curve",
-				  labelShow: false,
-				  color: "#ffcf3a",
-				  disableLegend: true,
-				  data: [70,50,85,130,64,88,70,50,85,130,64,88]
-				},
-			  ]
-			};
-		  this.chartData = JSON.parse(JSON.stringify(res));
-		  
-		  // 生成表格数据
-		  this.generateTableData(res);
-		}, 500);
-	  },
-	  
-	  // 添加生成表格数据的方法
-	  generateTableData(chartData) {
-		const tableData = [];
-		for (let i = 0; i < chartData.categories.length; i++) {
-		  tableData.push({
-			month: chartData.categories[i].replace('月', ''),
-			target: chartData.series[0].data[i],
-			actual: chartData.series[1].data[i],
-			ratio: chartData.series[2].data[i] + '%'
-		  });
-		}
-		this.tableData = tableData;
-	  }
-	}
-  };
-  </script>
+  /* 标题栏样式 */
+  .header {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 20rpx 30rpx;
+    margin-bottom: 20rpx; /* 增加与卡片区域的间距 */
+    font-weight: bold;
+    border-bottom: 1px solid #eeeeee;
+  }
   
-  <style scoped>
-	/* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
-	.charts-box {
-	  width: 100%;
-	  height: auto;
-	}
-	
-	/* 表格样式 */
-	.table-container {
-	  margin-top: 20px;
-	  padding: 0 10px;
-	  animation: fadeIn 0.8s ease-in-out;
-	}
-	
-	.data-table {
-	  width: 100%;
-	  border-collapse: collapse;
-	  text-align: center;
-	}
-	
-	.data-table th, .data-table td {
-	  border: 1px solid #ddd;
-	  padding: 8px;
-	}
-	
-	.data-table th {
-	  background-color: #f2f2f2;
-	  color: #333;
-	}
-	
-	.data-table tr:nth-child(even) {
-	  background-color: #f9f9f9;
-	}
-	
-	/* 添加渐入动画 */
-	@keyframes fadeIn {
-	  from {
-		opacity: 0;
-		transform: translateY(20px);
-	  }
-	  to {
-		opacity: 1;
-		transform: translateY(0);
-	  }
-	}
-  </style>
+  .header-title {
+    font-size: 36rpx;
+    font-weight: bold;
+  }
+  
+  /* 卡片容器样式 */
+  .cards-container {
+    margin-bottom: 30rpx;
+	padding: 10px;
+  }
+  
+  .cards-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20rpx;
+    border: none; /* 移除边框 */
+    background-color: transparent; /* 背景透明 */
+    border-radius: 8rpx; /* 添加圆角 */
+    overflow: hidden; /* 确保子元素不超出圆角边界 */
+    box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05); /* 添加轻微阴影 */
+  }
+  
+  
+  /* 卡片样式 */
+  .card {
+    flex: 1;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 20rpx 10rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #eeeeee;
+    min-height: 160rpx;
+	transition: all 0.3s ease; /* 添加过渡效果 */
+  }
+  
+  .card:last-child {
+    border-right: none;
+  }
+  
+  .card-title {
+    font-size: 28rpx;
+    margin-bottom: 10rpx;
+    text-align: center;
+  }
+  
+  .card-value {
+    font-size: 48rpx;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .blue {
+    color: #4285f4; /* 更现代的蓝色 */
+  }
+  
+  .red {
+    color: #ea4335; /* 更现代的红色 */
+  }
+  
+  .orange {
+    color: #fbbc05; /* 更现代的橙色 */
+  }
+  
+  .empty-card {
+    background-color: #ffffff;
+    border: none;
+  }
+  
+  /* 添加渐入动画 */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 为卡片添加动画 */
+  .cards-container {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+</style>
