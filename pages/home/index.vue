@@ -75,23 +75,40 @@ export default {
   /* 整体容器样式 */
   .container {
     width:100%;
-    height:calc(100dvh - 94px);
+    height:calc(100dvh - 114px);
     background-color: #f5f5f5;
   }
   
-  /* 标题栏样式 */
   .header {
     background-color: #ffffff;
     color: #333333;
-    padding: 20rpx 30rpx;
-    margin-bottom: 20rpx; /* 增加与卡片区域的间距 */
+    padding: 25rpx 30rpx;
+    margin: 20rpx 0; /* 上下增加间距 */
     font-weight: bold;
-    border-bottom: 1px solid #eeeeee;
+    border-radius: 8rpx; /* 添加圆角 */
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05); /* 添加轻微阴影 */
   }
   
   .header-title {
     font-size: 36rpx;
     font-weight: bold;
+    color: #333;
+    position: relative;
+    padding-left: 20rpx;
+    display: inline-block;
+  }
+  
+  /* 添加左侧装饰线 */
+  .header-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6rpx;
+    height: 32rpx;
+    background-color: #4285f4;
+    border-radius: 3rpx;
   }
   
   /* 卡片容器样式 */
