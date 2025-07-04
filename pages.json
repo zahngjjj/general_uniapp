@@ -1,9 +1,9 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/home/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "首页"
 			}
 		},
 		{
@@ -11,8 +11,52 @@
 			"style": {
 				"navigationBarTitleText": "销售完成情况"
 			}
+		},
+		{
+			"path": "pages/brand/index",
+			"style": {
+				"navigationBarTitleText": "品牌完成率"
+			}
+		},
+		{
+			"path": "pages/workOrder/EmergencyWorkOrder",
+			"style": {
+				"navigationBarTitleText": "紧急工单"
+			}
 		}
 	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#588bea",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/images/tabbar/home-grey.png",
+				"selectedIconPath": "static/images/tabbar/home-active.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/charts/MonthlySalesChart",
+				"iconPath": "static/images/tabbar/data-grey.png",
+				"selectedIconPath": "static/images/tabbar/data-active.png",
+				"text": "完成率"
+			},
+			{
+				"pagePath": "pages/brand/index",
+				"iconPath": "static/images/tabbar/brand-grey.png",
+				"selectedIconPath": "static/images/tabbar/brand-active.png",
+				"text": "品牌完成率"
+			},
+			{
+				"pagePath": "pages/workOrder/EmergencyWorkOrder",
+				"iconPath": "static/images/tabbar/urgency-grey.png",
+				"selectedIconPath": "static/images/tabbar/urgency-active.png",
+				"text": "紧急工单"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "总经理看板",
